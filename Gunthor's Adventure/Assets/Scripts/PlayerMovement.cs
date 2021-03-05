@@ -2,36 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerState
+{
+    walk,
+    attack,
+    interact
+}
+
 public class PlayerMovement : MonoBehaviour
 {
+    public PlayerState currentState;
     public float speed;
     private Rigidbody2D myRigidbody;
-    private Vector3 change;
+    private Vector3 move;
     private Animator myAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
-        myRigidbody = GetComponent<Rigidbody2D>();
+        currentState = PlayerState.walk;
         myAnimator = GetComponent<Animator>();
+        myRigidbody = GetComponent<Rigidbody2D>();
+        myAnimator.SetFloat("moveX", 0);
+        myAnimator.SetFloat("moveY", -1);
     }
 
     // Update is called once per frame
     void Update()
     {
-        change = Vector3.zero;
-        change.x = Input.GetAxisRaw("Horizontal");
-        change.y = Input.GetAxisRaw("Vertical");
-        MoveAndAnimate();
+        move = Vector3.zero;
+        move.x = Input.GetAxisRaw("Horizontal");
+        move.y = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetButtonDown("Attack") && currentState != PlayerState.attack)
+        {
+            StartCoroutine(AttackCo());
+        }
+        else if (currentState == PlayerState.walk)
+        {
+            MoveAndAnimate();
+        }
+    }
+
+    private IEnumerator AttackCo()
+    {
+        myAnimator.SetBool("isAttacking", true);
+        currentState = PlayerState.attack;
+        yield return null;
+        myAnimator.SetBool("isAttacking", false);
+        yield return new WaitForSeconds(0.33f);
+        currentState = PlayerState.walk;
     }
 
     private void MoveAndAnimate()
     {
-        if (change != Vector3.zero)
+        if (move != Vector3.zero)
         {
             myAnimator.SetBool("isWalking", true);
-            myAnimator.SetFloat("moveX", change.x);
-            myAnimator.SetFloat("moveY", change.y);
+            myAnimator.SetFloat("moveX", move.x);
+            myAnimator.SetFloat("moveY", move.y);
             MoveCharacter();
         }
         else
@@ -42,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveCharacter()
     {
-        myRigidbody.MovePosition(transform.position + change * speed * Time.deltaTime);
+        move.Normalize();
+        myRigidbody.MovePosition(transform.position + move * speed * Time.deltaTime);
     }
 }
