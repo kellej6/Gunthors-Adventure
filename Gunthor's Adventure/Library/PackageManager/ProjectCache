@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637512085000000000
+      ticks: 637512084995092618
     m_Hash: 2196797322
   m_LockFileStatus:
     m_FilePath: C:/Users/jason/source/repos/Unity/Gunthors-Adventure/Gunthor's Adventure/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637514196932887345
+      ticks: 637512085008561438
     m_Hash: 3376577155
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
