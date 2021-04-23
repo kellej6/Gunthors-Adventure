@@ -6,41 +6,49 @@ public class Knockback : MonoBehaviour
 {
     public float thrust;
     public float knockTime;
+    public float damage;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemies"))
+        if (collision.gameObject.CompareTag("breakable") && gameObject.CompareTag("Player"))
         {
-            Rigidbody2D enemy = collision.GetComponent<Rigidbody2D>();
-
-            if(enemy!= null)
-            {
-                Vector2 difference = enemy.transform.position - transform.position;
-                difference = difference.normalized * thrust;
-                enemy.AddForce(difference, ForceMode2D.Impulse);
-                StartCoroutine(knockCo(enemy));
-            }
+            collision.GetComponent<PotController>().Destory();
         }
-    }
 
-    IEnumerator knockCo(Rigidbody2D enemy)
-    {
-        if(enemy!= null)
+        if (collision.gameObject.CompareTag("Enemies") || collision.gameObject.CompareTag("Player"))
         {
-            yield return new WaitForSeconds(knockTime);
-            enemy.velocity = Vector2.zero;
+            Rigidbody2D hit = collision.GetComponent<Rigidbody2D>();
+
+            if (hit != null)
+            {
+                Vector2 difference = hit.transform.position - transform.position;
+                difference = difference.normalized * thrust;
+                hit.AddForce(difference, ForceMode2D.Impulse);
+
+                if (collision.gameObject.CompareTag("Enemies") && collision.isTrigger)
+                {
+                    hit.GetComponent<Enemy>().currentState = EnemyState.stagger;
+                    collision.GetComponent<Enemy>().Knock(hit, knockTime, damage);
+                }
+
+                if (collision.gameObject.CompareTag("Player"))
+                {
+                    hit.GetComponent<PlayerMovement>().currentState = PlayerState.stagger;
+                    collision.GetComponent<PlayerMovement>().Knock(knockTime);
+                }
+            }
         }
     }
 }
