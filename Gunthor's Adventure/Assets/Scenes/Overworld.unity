@@ -32263,7 +32263,7 @@ GameObject:
   - component: {fileID: 556126956}
   m_Layer: 0
   m_Name: enemy
-  m_TagString: Untagged
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32386,7 +32386,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556126950}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -32396,7 +32396,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &556126956
@@ -32415,10 +32415,11 @@ MonoBehaviour:
   enemyName: Woody
   baseAttack: 1
   moveSpeed: 1.5
-  target: {fileID: 0}
+  target: {fileID: 1720440966}
   chaseRadius: 4
   attackRadius: 1
   homePosition: {fileID: 0}
+  myAnimator: {fileID: 556126951}
 --- !u!1001 &640252710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61636,6 +61637,7 @@ GameObject:
   - component: {fileID: 1720440967}
   - component: {fileID: 1720440969}
   - component: {fileID: 1720440970}
+  - component: {fileID: 1720440971}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -61807,6 +61809,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySprite: {fileID: 2074140258}
   clueActive: 0
+--- !u!114 &1720440971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720440963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c93e4f17a2e540ccac80ef9a7128455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrust: 5
+  knockTime: 0.3
 --- !u!1001 &1743308931
 PrefabInstance:
   m_ObjectHideFlags: 0

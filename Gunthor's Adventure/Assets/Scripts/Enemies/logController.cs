@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class logController : Enemy
 {
+    Rigidbody2D myRigidbody;
     public Transform target;
     public float chaseRadius;
     public float attackRadius;
     public Transform homePosition;
+    public Animator myAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
+        myRigidbody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -24,7 +28,8 @@ public class logController : Enemy
         if (Vector3.Distance(target.position, transform.position) <= chaseRadius
             && Vector3.Distance(target.position, transform.position) > attackRadius)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            Vector3 temp = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            myRigidbody.MovePosition(temp);
         }
     }
 }
