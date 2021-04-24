@@ -35,16 +35,16 @@ public class RoomTransfer : MonoBehaviour
 
             if (needText)
             {
-                StartCoroutine(placeNameCo());
+                StartCoroutine(PlaceNameCo());
             }
         }
     }
 
-    private IEnumerator placeNameCo()
+    private IEnumerator PlaceNameCo()
     {
         text.SetActive(true);
         placeText.text = placeName;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         text.SetActive(false);
     }
 }
